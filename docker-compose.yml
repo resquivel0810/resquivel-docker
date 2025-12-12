@@ -34,15 +34,17 @@ services:
     container_name: wordpress
     platform: linux/amd64
     depends_on:
-      db:
+      - nginx-proxy
+      - letsencrypt
+      - db:
         condition: service_healthy
     image: wordpress:latest
     volumes:
       - ./site/wp-content:/var/www/html/wp-content
       - ./init/prep.sh:/prep.sh
-    # IMPORTANTE: Cambia el puerto interno de Apache
-    ports:
-      - "8080:8080"  # Host:8080 → Contenedor:8080
+    # ¡NO EXPONGAS PUERTOS! El proxy manejará el tráfico
+    # ports:
+    #   - "8080:80"
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
@@ -51,23 +53,18 @@ services:
       WORDPRESS_DB_NAME: resquive_wp870
       WORDPRESS_TABLE_PREFIX: wpvf_
       WORDPRESS_DEBUG: "0"
-      # Variables para proxy - IMPORTANTE: Usar puerto 8080
+      # Variables CRÍTICAS para el proxy
       VIRTUAL_HOST: resquivel.com,www.resquivel.com
       LETSENCRYPT_HOST: resquivel.com,www.resquivel.com
       LETSENCRYPT_EMAIL: resquivel0810@gmail.com
-      VIRTUAL_PORT: 8080  # ← DECIRLE al proxy que use puerto 8080
+      VIRTUAL_PORT: 80
     networks:
       - web-network
       - internal-network
-    # MODIFICA el command para cambiar puerto de Apache
     command: >
       sh -c "
-        # Cambiar Apache para escuchar en puerto 8080
-        sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf
-        sed -i 's/:80/:8080/g' /etc/apache2/sites-available/*.conf
-        # Iniciar Apache
         docker-entrypoint.sh apache2-foreground &
-        sleep 15
+        sleep 20
         chmod +x /prep.sh
         /prep.sh
         wait
