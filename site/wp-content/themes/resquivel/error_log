@@ -1,0 +1,12 @@
+[06-May-2025 13:29:47 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home1/resquive/public_html/wp-content/themes/resquivel/index.php:2
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/themes/resquivel/index.php on line 2
+[07-May-2025 10:57:52 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home1/resquive/public_html/wp-content/themes/resquivel/index.php:2
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/themes/resquivel/index.php on line 2
+[08-May-2025 17:25:53 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function get_header() in /home1/resquive/public_html/wp-content/themes/resquivel/index.php:2
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/themes/resquivel/index.php on line 2

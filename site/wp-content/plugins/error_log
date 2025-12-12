@@ -1,0 +1,68 @@
+[08-Dec-2024 15:38:16 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[09-Jan-2025 09:25:27 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[17-Jan-2025 23:23:14 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[25-Jan-2025 23:44:14 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[04-Feb-2025 11:21:14 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[02-Jul-2025 05:27:21 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[03-Jul-2025 12:04:12 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[05-Jul-2025 11:14:06 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[08-Jul-2025 04:35:37 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[12-Jul-2025 10:31:31 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[25-Aug-2025 23:40:47 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[02-Sep-2025 13:50:17 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[15-Sep-2025 08:21:13 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[18-Sep-2025 09:50:58 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[19-Sep-2025 14:01:27 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[11-Oct-2025 07:59:23 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69
+[24-Oct-2025 18:29:06 America/Mexico_City] PHP Fatal error:  Uncaught Error: Call to undefined function add_action() in /home1/resquive/public_html/wp-content/plugins/hello.php:69
+Stack trace:
+#0 {main}
+  thrown in /home1/resquive/public_html/wp-content/plugins/hello.php on line 69

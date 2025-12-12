@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  wordpress:
+    container_name: wordpress
+    platform: linux/amd64
+    depends_on:
+      db:
+        condition: service_healthy
+    image: wordpress:latest
+    volumes:
+      - ./site/wp-content:/var/www/html/wp-content
+      - ./init/prep.sh:/prep.sh
+    ports:
+      - "80:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: resquive_wp870
+      WORDPRESS_DB_PASSWORD: unamuysegura1
+      WORDPRESS_DB_NAME: resquive_wp870
+      WORDPRESS_TABLE_PREFIX: wpvf_
+      WORDPRESS_DEBUG: "0"
+      DISABLED_PLUGINS: "plugin1,plugin2"  # Ajusta tus plugins aquí
+    command: >
+      sh -c "
+        docker-entrypoint.sh apache2-foreground &
+        sleep 15
+        chmod +x /prep.sh
+        /prep.sh
+        wait
+      "
+
+  db:
+    container_name: db
+    image: mysql:5.7
+    platform: linux/amd64
+    command: "--default-authentication-plugin=mysql_native_password"
+    volumes:
+      - ./database:/var/lib/mysql
+      - ./mysqldumps/backup.sql.gz:/docker-entrypoint-initdb.d/backup.sql.gz
+      - ./init/migrate.sh:/docker-entrypoint-initdb.d/migrate.sh
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: unamuysegura1
+      MYSQL_DATABASE: resquive_wp870
+      MYSQL_USER: resquive_wp870
+      MYSQL_PASSWORD: unamuysegura1
+      WORDPRESS_TABLE_PREFIX: wpvf_
+      PRODUCTION_URL: "https://tu-dominio-original.com"
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-punamuysegura1"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
