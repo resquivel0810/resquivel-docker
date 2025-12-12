@@ -5,8 +5,8 @@ services:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     ports:
-      - "80:80"
-      - "443:443"
+      - "80:80"    # Solo si no hay conflicto
+      - "443:443"  # Solo si no hay conflicto
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /docker/certs:/etc/nginx/certs
@@ -14,6 +14,8 @@ services:
       - /docker/html:/usr/share/nginx/html
     networks:
       - web-network
+    # Si el puerto 80 sigue en uso, usa esta opción:
+    # network_mode: "host"  # Usa los puertos del host directamente
 
   letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
@@ -40,9 +42,6 @@ services:
     volumes:
       - ./site/wp-content:/var/www/html/wp-content
       - ./init/prep.sh:/prep.sh
-    # QUITA esta línea de ports - el proxy manejará el tráfico
-    # ports:
-    #   - "8080:80"
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
@@ -51,14 +50,17 @@ services:
       WORDPRESS_DB_NAME: resquive_wp870
       WORDPRESS_TABLE_PREFIX: wpvf_
       WORDPRESS_DEBUG: "0"
-      # AGREGAR estas variables para el proxy y SSL
+      # Variables para proxy
       VIRTUAL_HOST: resquivel.com,www.resquivel.com
       LETSENCRYPT_HOST: resquivel.com,www.resquivel.com
-      LETSENCRYPT_EMAIL: resquivel0810@gmail.com
+      LETSENCRYPT_EMAIL: tu-email@gmail.com
       VIRTUAL_PORT: 80
     networks:
       - web-network
       - internal-network
+    # IMPORTANTE: Quita el mapeo de puertos del WordPress
+    # ports:
+    #   - "8080:80"
     command: >
       sh -c "
         docker-entrypoint.sh apache2-foreground &
@@ -85,7 +87,6 @@ services:
       MYSQL_PASSWORD: unamuysegura1
       WORDPRESS_TABLE_PREFIX: wpvf_
       PRODUCTION_URL: "https://resquivel.com"
-    # Cambia el puerto si necesitas acceder desde fuera
     ports:
       - "3307:3306"
     healthcheck:
@@ -101,13 +102,12 @@ services:
     image: adminer
     restart: always
     environment:
-      # Opcional: Si quieres SSL para adminer también
-      VIRTUAL_HOST: adminer.resquivel.com
-      VIRTUAL_PORT: 8080
+      # Si quieres adminer accesible vía proxy
+      # VIRTUAL_HOST: adminer.resquivel.com
+      # VIRTUAL_PORT: 8080
     ports:
-      - "8082:8080"
+      - "8082:8080"  # Mantener así para acceso directo
     networks:
-      - web-network
       - internal-network
 
 networks:
