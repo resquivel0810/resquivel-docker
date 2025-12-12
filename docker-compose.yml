@@ -1,63 +1,68 @@
 version: '3.8'
 
 services:
-  wordpress:
-    container_name: wordpress
-    platform: linux/amd64
+  # nginx-proxy usará el puerto 80 que liberamos
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"      # Ahora sí funcionará
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+    restart: unless-stopped
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
     depends_on:
-      db:
-        condition: service_healthy
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    restart: unless-stopped
+
+  wordpress:
     image: wordpress:latest
+    container_name: wordpress
+    # ¡NO EXPONES PUERTOS! El proxy manejará el tráfico
+    # ports:
+    #   - "8080:80"  # ← ELIMINA ESTA LÍNEA
     volumes:
       - ./site/wp-content:/var/www/html/wp-content
       - ./init/prep.sh:/prep.sh
-    ports:
-      - "8080:80"  # ← PUERTO MODIFICADO
-    restart: always
     environment:
-      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: resquive_wp870
       WORDPRESS_DB_PASSWORD: unamuysegura1
       WORDPRESS_DB_NAME: resquive_wp870
       WORDPRESS_TABLE_PREFIX: wpvf_
-      WORDPRESS_DEBUG: "0"
-    command: >
-      sh -c "
-        docker-entrypoint.sh apache2-foreground &
-        sleep 15
-        chmod +x /prep.sh
-        /prep.sh
-        wait
-      "
+      # Variables para nginx-proxy
+      VIRTUAL_HOST: resquivel.com,www.resquivel.com
+      LETSENCRYPT_HOST: resquivel.com,www.resquivel.com
+      LETSENCRYPT_EMAIL: resquivel0810@gmail.com
+    restart: unless-stopped
+    depends_on:
+      - db
 
   db:
-    container_name: db
     image: mysql:5.7
-    platform: linux/amd64
-    command: "--default-authentication-plugin=mysql_native_password"
-    volumes:
-      - ./database:/var/lib/mysql
-      - ./mysqldumps/backup.sql.gz:/docker-entrypoint-initdb.d/backup.sql.gz
-      - ./init/migrate.sh:/docker-entrypoint-initdb.d/migrate.sh
-    restart: always
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: unamuysegura1
       MYSQL_DATABASE: resquive_wp870
       MYSQL_USER: resquive_wp870
       MYSQL_PASSWORD: unamuysegura1
-      WORDPRESS_TABLE_PREFIX: wpvf_
-      PRODUCTION_URL: "https://tu-dominio-original.com"
-    ports:
-      - "3307:3306"  # ← Cambia si 3306 también está en uso
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-punamuysegura1"]
-      interval: 5s
-      timeout: 5s
-      retries: 15
+    volumes:
+      - ./database:/var/lib/mysql
+    restart: unless-stopped
 
   adminer:
-    container_name: adminer
     image: adminer
-    restart: always
+    container_name: adminer
     ports:
-      - "8082:8080"  # ← Puerto modificado
+      - "8082:8080"  # Mantenemos Adminer en 8082
+    restart: unless-stopped
