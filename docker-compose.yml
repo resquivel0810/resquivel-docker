@@ -36,13 +36,12 @@ services:
     depends_on:
       - nginx-proxy
       - letsencrypt
-      db:
-        condition: service_healthy
+      - db
     image: wordpress:latest
     volumes:
       - ./site/wp-content:/var/www/html/wp-content
       - ./init/prep.sh:/prep.sh
-    # ¡NO EXPONGAS PUERTOS! El proxy manejará el tráfico
+    # NO USES PORTS - el proxy manejará el tráfico
     # ports:
     #   - "8080:80"
     restart: always
@@ -53,7 +52,7 @@ services:
       WORDPRESS_DB_NAME: resquive_wp870
       WORDPRESS_TABLE_PREFIX: wpvf_
       WORDPRESS_DEBUG: "0"
-      # Variables CRÍTICAS para el proxy
+      # Variables para proxy y SSL
       VIRTUAL_HOST: resquivel.com,www.resquivel.com
       LETSENCRYPT_HOST: resquivel.com,www.resquivel.com
       LETSENCRYPT_EMAIL: resquivel0810@gmail.com
