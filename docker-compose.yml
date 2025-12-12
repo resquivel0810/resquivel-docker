@@ -12,7 +12,7 @@ services:
       - ./site/wp-content:/var/www/html/wp-content
       - ./init/prep.sh:/prep.sh
     ports:
-      - "80:80"
+      - "8080:80"  # ← PUERTO MODIFICADO
     restart: always
     environment:
       WORDPRESS_DB_HOST: db:3306
@@ -21,7 +21,6 @@ services:
       WORDPRESS_DB_NAME: resquive_wp870
       WORDPRESS_TABLE_PREFIX: wpvf_
       WORDPRESS_DEBUG: "0"
-      DISABLED_PLUGINS: "plugin1,plugin2"  # Ajusta tus plugins aquí
     command: >
       sh -c "
         docker-entrypoint.sh apache2-foreground &
@@ -49,7 +48,7 @@ services:
       WORDPRESS_TABLE_PREFIX: wpvf_
       PRODUCTION_URL: "https://tu-dominio-original.com"
     ports:
-      - "3306:3306"
+      - "3307:3306"  # ← Cambia si 3306 también está en uso
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-punamuysegura1"]
       interval: 5s
@@ -61,4 +60,4 @@ services:
     image: adminer
     restart: always
     ports:
-      - "8080:8080"
+      - "8082:8080"  # ← Puerto modificado
